@@ -1,0 +1,109 @@
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f9f8;
+    color: #294d57;
+}
+
+header {
+    background-color: #285866;
+    color: white;
+    text-align: center;
+    padding: 40px 20px;
+}
+
+header h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+header p {
+    font-size: 16px;
+}
+
+main {
+    width: 90%;
+    max-width: 1200px;
+    margin: 40px auto;
+}
+
+.buscador {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 35px;
+}
+
+.buscador input {
+    flex: 1;
+    padding: 15px;
+    border: 1px solid #8fcbd0;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.buscador button {
+    padding: 15px 25px;
+    background-color: #397d8c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.buscador button:hover {
+    background-color: #285866;
+}
+
+main h2 {
+    margin-bottom: 20px;
+}
+
+.resultados {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+}
+
+.container-medicamento {
+    background-color: white;
+    padding: 22px;
+    border-radius: 12px;
+    border: 1px solid #dcebea;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+    transition: transform 0.2s;
+}
+
+.container-medicamento:hover {
+    transform: translateY(-4px);
+}
+
+.container-medicamento h3 {
+    color: #285866;
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.container-medicamento p {
+    font-size: 14px;
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+@media (max-width: 600px) {
+
+    .buscador {
+        flex-direction: column;
+    }
+
+    .buscador button {
+        padding: 14px;
+    }
+
+}
