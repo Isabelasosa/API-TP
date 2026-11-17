@@ -2,39 +2,62 @@
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Buscador de medicamentos</title>
+
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
     <header>
+
         <h1>Buscador de medicamentos</h1>
-        <p>Encontrá información sobre medicamentos</p>
+
+        <p>Encontrá información sobre productos farmacéuticos</p>
+
     </header>
 
     <main>
 
-        <div class="buscador">
+        <section class="buscador">
+
             <input
                 type="text"
                 id="buscador"
-                placeholder="Escribí el nombre de un medicamento..."
+                placeholder="Buscar por nombre o ingrediente..."
             >
 
-            <button id="btnBuscar">Buscar</button>
-        </div>
+            <button id="btnBuscar">
+                Buscar
+            </button>
 
-        <h2>Medicamentos disponibles</h2>
+        </section>
 
-        <div id="resultados" class="resultados"></div>
+        <section class="seccion-resultados">
+
+            <h2>Medicamentos disponibles</h2>
+
+            <p class="descripcion">
+                Explorá los productos farmacéuticos disponibles en la base de datos.
+            </p>
+
+            <div id="resultados" class="resultados"></div>
+
+        </section>
 
     </main>
 
-    <script src="script.js"></script>
+    <footer>
+        <p>Datos obtenidos de OpenFDA</p>
+    </footer>
+
+    <script src="main.js"></script>
 
 </body>
+
 </html>

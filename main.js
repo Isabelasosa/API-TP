@@ -1,6 +1,4 @@
 
-const URL = "https://api.fda.gov/drug/label.json?search=effective_time:%5B20090601%20TO%2020261117%5D&limit=100";
-
 const contenedor = document.getElementById("resultados");
 const buscador = document.getElementById("buscador");
 const boton = document.getElementById("btnBuscar");
@@ -13,26 +11,26 @@ async function obtenerMedicamentos() {
 
         contenedor.innerHTML = "<p>Cargando medicamentos...</p>";
 
-        const respuesta = await fetch(URL);
+        const respuesta = await fetch(
+            "https://api.fda.gov/drug/ndc.json?limit=100"
+        );
 
         if (!respuesta.ok) {
-            throw new Error("Error HTTP: " + respuesta.status);
+            throw new Error("Error al obtener los medicamentos");
         }
 
         const datos = await respuesta.json();
 
-        medicamentos = datos.results || [];
+        medicamentos = datos.results;
 
         mostrarMedicamentos(medicamentos);
 
     } catch (error) {
 
-        console.error("Error:", error);
+        contenedor.innerHTML =
+            "<p>Error al cargar los medicamentos.</p>";
 
-        contenedor.innerHTML = `
-            <p>No se pudieron cargar los medicamentos.</p>
-            <p>${error.message}</p>
-        `;
+        console.log(error);
 
     }
 
@@ -42,41 +40,43 @@ function mostrarMedicamentos(lista) {
 
     contenedor.innerHTML = "";
 
-    if (!lista || lista.length === 0) {
-        contenedor.innerHTML = "<p>No se encontraron medicamentos.</p>";
+    if (lista.length === 0) {
+
+        contenedor.innerHTML =
+            "<p>No se encontraron medicamentos.</p>";
+
         return;
+
     }
 
     lista.forEach(medicamento => {
 
-        const nombre = medicamento.openfda?.brand_name?.[0] || "Sin nombre";
+        const nombre =
+            medicamento.brand_name || "Sin nombre";
 
-        const ingrediente = medicamento.openfda?.generic_name?.[0] || "No disponible";
+        const ingrediente =
+            medicamento.active_ingredients?.[0]?.name ||
+            "No disponible";
 
-        const fabricante = medicamento.openfda?.manufacturer_name?.[0] || "No disponible";
+        const fabricante =
+            medicamento.labeler_name || "No disponible";
 
-        const fecha = medicamento.effective_time || "No disponible";
+        const forma =
+            medicamento.dosage_form || "No disponible";
 
         const tarjeta = document.createElement("div");
 
         tarjeta.classList.add("container-medicamento");
 
-        const titulo = document.createElement("h3");
-        titulo.textContent = nombre;
+        tarjeta.innerHTML = `
+            <h3>${nombre}</h3>
 
-        const pIngrediente = document.createElement("p");
-        pIngrediente.textContent = "Ingrediente: " + ingrediente;
+            <p><strong>Ingrediente:</strong> ${ingrediente}</p>
 
-        const pFabricante = document.createElement("p");
-        pFabricante.textContent = "Fabricante: " + fabricante;
+            <p><strong>Fabricante:</strong> ${fabricante}</p>
 
-        const pFecha = document.createElement("p");
-        pFecha.textContent = "Fecha: " + fecha;
-
-        tarjeta.appendChild(titulo);
-        tarjeta.appendChild(pIngrediente);
-        tarjeta.appendChild(pFabricante);
-        tarjeta.appendChild(pFecha);
+            <p><strong>Presentación:</strong> ${forma}</p>
+        `;
 
         contenedor.appendChild(tarjeta);
 
@@ -90,8 +90,10 @@ function buscarMedicamento() {
 
     const filtrados = medicamentos.filter(medicamento => {
 
-        const nombre = medicamento.openfda?.brand_name?.[0] || "";
-        const ingrediente = medicamento.openfda?.generic_name?.[0] || "";
+        const nombre = medicamento.brand_name || "";
+
+        const ingrediente =
+            medicamento.active_ingredients?.[0]?.name || "";
 
         return nombre.toLowerCase().includes(texto) ||
                ingrediente.toLowerCase().includes(texto);
